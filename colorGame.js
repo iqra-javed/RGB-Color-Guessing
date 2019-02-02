@@ -7,10 +7,24 @@ const colors = [
   'rgb(255, 0, 255)'
 ];
 
-const squares = document.querySelectorAll(".square");
+const squares = document.querySelectorAll('.square');
 let pickedColor = colors[3];
-let colorDisplay = document.getElementById("colorDisplay");
+let colorDisplay = document.getElementById('colorDisplay');
+let messageDisplay = document.querySelector('#message');
 
 colorDisplay.textContent = pickedColor;
 
-squares.forEach((color, index) => color.style.backgroundColor = colors[index])
+squares.forEach((square, index) => {
+  square.style.backgroundColor = colors[index];
+  square.addEventListener('click', function() {
+    let clickedColor = this.style.backgroundColor;
+    clickedColor === pickedColor
+      ? (messageDisplay.textContent = 'Correct!' && changeColors(clickedColor))
+      : (this.style.backgroundColor =
+          '#232323' && (messageDisplay.textContent = 'Try Again!'));
+  });
+});
+
+function changeColors(color) {
+  squares.forEach(square => (square.style.backgroundColor = color));
+}
